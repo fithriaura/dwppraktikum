@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
+        /* Mengatur scroll bawaan web menjadi lebih mulus */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             padding: 0;
@@ -46,6 +51,17 @@
             background-image: url('hiasan/bgdalam.png');
             background-size: cover;
             background-position: center;
+            
+            /* EFEK ANIMASI SCROLL: State awal sebelum di-scroll (Tembus pandang dan agak ke bawah) */
+            opacity: 0;
+            transform: translateY(60px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Class ini akan ditambahkan oleh JS saat kartu masuk ke dalam layar */
+        .card.show-on-scroll {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .decor-flower {
@@ -127,6 +143,7 @@
             margin-top: 28px;
             z-index: 10;
             position: relative;
+            margin-top: 80px;
         }
 
         .cover-kepada p {
@@ -216,7 +233,7 @@
 
         .cd-names {
             z-index: 10;
-            margin-top: 6px;
+            margin-top: 40px;
             line-height: 1;
         }
 
@@ -271,7 +288,7 @@
             font-family: 'Montserrat', sans-serif;
             font-size: 28px;
             font-weight: 700;
-            color: #2c3e50;
+            color: #c5a059;
             line-height: 1;
         }
 
@@ -336,6 +353,15 @@
             font-weight: 500;
             color: #4a4a4a;
             margin-top: 6px;
+        }
+
+        /* ===================== */
+        /* HALAMAN STORY KHUSUS  */
+        /* ===================== */
+        #halaman-story {
+            height: auto;
+            max-height: none;
+            padding-bottom: 150px;
         }
 
         /* ===================== */
@@ -530,7 +556,7 @@
             position: relative;
             width: 85%;
             margin-top: 20px;
-            padding-left: 30px;
+            padding-left: 40px;
             text-align: left;
             z-index: 10;
         }
@@ -596,22 +622,28 @@
             max-width: 280px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
             margin-bottom: 8px;
+            border: 2px solid #c5a059;
+            aspect-ratio: 1 / 0.8;
         }
 
         .story-photo-box img {
             width: 100%;
             display: block;
+            object-fit: cover;
         }
 
         .story-caption {
-            font-size: 12px;
+            font-size: 14px;
             color: #666;
             font-style: italic;
+            font-family: 'Times New Roman', Times, serif;
             margin-left: 5px;
         }
 
+        /* ===================== */
+        /* PERUBAHAN CSS GALERI  */
+        /* ===================== */
         .gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -633,19 +665,37 @@
             object-fit: cover;
         }
 
-        .gallery-main {
+        .gallery-carousel-container {
             width: 85%;
-            margin-top: 15px;
+            overflow: hidden;
+            z-index: 10;
+            margin-top: 5px;
+            padding-bottom: 20px;
+        }
+
+        .gallery-carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 100%;
+        }
+
+        .gallery-main {
+            width: 100%;
+            flex-shrink: 0;
+            margin-top: 10px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            z-index: 10;
             border: 1px solid #eee;
             aspect-ratio: 1/0.8;
+            background-color: #fff;
+            box-sizing: border-box;
         }
 
         .gallery-main img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
@@ -654,7 +704,7 @@
             justify-content: space-between;
             align-items: center;
             width: 78%;
-            margin-top: 15px;
+            margin-top: 0px;
             background-color: #fff;
             padding: 10px 15px;
             border-radius: 8px;
@@ -672,6 +722,11 @@
             color: #c5a059;
             font-size: 18px;
             cursor: pointer;
+            padding: 5px;
+        }
+
+        .gallery-nav i:hover {
+            color: #832c2c;
         }
 
         .form-container {
@@ -831,6 +886,11 @@
                 box-shadow: none;
                 margin-bottom: 0;
             }
+
+            #halaman-story {
+                height: auto;
+                max-height: none;
+            }
         }
     </style>
 </head>
@@ -850,7 +910,7 @@
             <p>Kepada Yth.</p>
             <p>Bapak/Ibu/Saudara/i</p>
         </div>
-        <div class="cover-guest-name-box">&nbsp;</div>
+        <div class="cover-guest-name-box">Alexander</div>
         <button class="cover-btn-buka">BUKA UNDANGAN</button>
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
     </div>
@@ -860,87 +920,21 @@
 
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
 
-        <!-- Foto lingkaran + bunga wreath -->
         <div class="cd-photo-wrapper">
             <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
                 alt="Foto Pasangan" class="cd-photo-circle">
-            <!-- SVG wreath bunga biru di bawah foto -->
-            <div class="cd-wreath">
-                <svg viewBox="0 0 230 75" xmlns="http://www.w3.org/2000/svg" width="230">
-                    <ellipse cx="22" cy="48" rx="13" ry="6" fill="#7aad8f" transform="rotate(-30 22 48)"
-                        opacity="0.85" />
-                    <ellipse cx="10" cy="40" rx="10" ry="4.5" fill="#5d9474" transform="rotate(-50 10 40)"
-                        opacity="0.75" />
-                    <ellipse cx="36" cy="56" rx="11" ry="4.5" fill="#7aad8f" transform="rotate(-10 36 56)"
-                        opacity="0.8" />
-                    <ellipse cx="208" cy="48" rx="13" ry="6" fill="#7aad8f" transform="rotate(30 208 48)"
-                        opacity="0.85" />
-                    <ellipse cx="220" cy="40" rx="10" ry="4.5" fill="#5d9474" transform="rotate(50 220 40)"
-                        opacity="0.75" />
-                    <ellipse cx="194" cy="56" rx="11" ry="4.5" fill="#7aad8f" transform="rotate(10 194 56)"
-                        opacity="0.8" />
-                    <line x1="50" y1="55" x2="34" y2="43" stroke="#5d9474" stroke-width="1.2" opacity="0.7" />
-                    <line x1="180" y1="55" x2="196" y2="43" stroke="#5d9474" stroke-width="1.2" opacity="0.7" />
-                    <circle cx="68" cy="45" r="15" fill="#5b7fa6" opacity="0.88" />
-                    <circle cx="68" cy="45" r="11" fill="#7099bf" />
-                    <circle cx="68" cy="45" r="6.5" fill="#8cb3d9" />
-                    <circle cx="68" cy="45" r="3" fill="#aaccee" />
-                    <ellipse cx="54" cy="38" rx="9" ry="5.5" fill="#5b7fa6" transform="rotate(-20 54 38)"
-                        opacity="0.82" />
-                    <ellipse cx="82" cy="38" rx="9" ry="5.5" fill="#5b7fa6" transform="rotate(20 82 38)"
-                        opacity="0.82" />
-                    <ellipse cx="68" cy="31" rx="8" ry="5.5" fill="#7099bf" opacity="0.78" />
-                    <ellipse cx="58" cy="57" rx="8" ry="4.5" fill="#5b7fa6" transform="rotate(15 58 57)"
-                        opacity="0.72" />
-                    <ellipse cx="78" cy="57" rx="8" ry="4.5" fill="#5b7fa6" transform="rotate(-15 78 57)"
-                        opacity="0.72" />
-                    <circle cx="115" cy="40" r="14" fill="#e8e0d0" opacity="0.95" />
-                    <circle cx="115" cy="40" r="10" fill="#f2ece0" />
-                    <circle cx="115" cy="40" r="5.5" fill="#f8f4ec" />
-                    <circle cx="115" cy="40" r="2.5" fill="#fff" />
-                    <ellipse cx="102" cy="32" rx="8" ry="5" fill="#e8e0d0" transform="rotate(-18 102 32)"
-                        opacity="0.83" />
-                    <ellipse cx="128" cy="32" rx="8" ry="5" fill="#e8e0d0" transform="rotate(18 128 32)"
-                        opacity="0.83" />
-                    <ellipse cx="115" cy="27" rx="7" ry="5" fill="#f2ece0" opacity="0.78" />
-                    <ellipse cx="105" cy="51" rx="7" ry="4" fill="#e8e0d0" transform="rotate(12 105 51)"
-                        opacity="0.72" />
-                    <ellipse cx="125" cy="51" rx="7" ry="4" fill="#e8e0d0" transform="rotate(-12 125 51)"
-                        opacity="0.72" />
-                    <circle cx="162" cy="45" r="15" fill="#5b7fa6" opacity="0.88" />
-                    <circle cx="162" cy="45" r="11" fill="#7099bf" />
-                    <circle cx="162" cy="45" r="6.5" fill="#8cb3d9" />
-                    <circle cx="162" cy="45" r="3" fill="#aaccee" />
-                    <ellipse cx="148" cy="38" rx="9" ry="5.5" fill="#5b7fa6" transform="rotate(-20 148 38)"
-                        opacity="0.82" />
-                    <ellipse cx="176" cy="38" rx="9" ry="5.5" fill="#5b7fa6" transform="rotate(20 176 38)"
-                        opacity="0.82" />
-                    <ellipse cx="162" cy="31" rx="8" ry="5.5" fill="#7099bf" opacity="0.78" />
-                    <ellipse cx="152" cy="57" rx="8" ry="4.5" fill="#5b7fa6" transform="rotate(15 152 57)"
-                        opacity="0.72" />
-                    <ellipse cx="172" cy="57" rx="8" ry="4.5" fill="#5b7fa6" transform="rotate(-15 172 57)"
-                        opacity="0.72" />
-                    <circle cx="92" cy="60" r="5.5" fill="#e8c97a" opacity="0.85" />
-                    <circle cx="92" cy="60" r="2.2" fill="#f5dfa0" />
-                    <circle cx="138" cy="60" r="5.5" fill="#e8c97a" opacity="0.85" />
-                    <circle cx="138" cy="60" r="2.2" fill="#f5dfa0" />
-                </svg>
-            </div>
         </div>
 
-        <!-- Nama pasangan -->
         <div class="cd-names">
             <span class="cd-name-script">Aryo</span>
             <span class="cd-amp">&amp;</span>
             <span class="cd-name-script">Aura</span>
         </div>
 
-        <!-- Teks undangan -->
         <div class="cd-will-hold">
             Akan menyelenggarakan acara<br>pernikahan
         </div>
 
-        <!-- Display tanggal: SENIN | 10 MARET | 2030 -->
         <div class="cd-date-display">
             <div class="cd-date-cell">
                 <div class="cd-date-sub">SENIN</div>
@@ -954,10 +948,8 @@
             </div>
         </div>
 
-        <!-- Label countdown -->
         <div class="cd-countdown-label">Acara akan dimulai dalam</div>
 
-        <!-- Kotak countdown -->
         <div class="cd-countdown-boxes">
             <div class="cd-box">
                 <div class="cd-box-inner">
@@ -989,7 +981,7 @@
 
     </div>
 
-    <!-- Halaman 3 -->
+    <!-- Halaman 3 (Ucapan)-->
     <div class="card">
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
         <div class="greeting">Assalammualaikum Wr.Wb</div>
@@ -1011,7 +1003,7 @@
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
     </div>
 
-    <!-- Halaman 4 -->
+    <!-- Halaman 4 (Peta) -->
     <div class="card">
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
         <div class="page-title">Save The Date</div>
@@ -1032,15 +1024,18 @@
                 <div class="info-box-title">Tempat</div>
                 <div class="location-name">GEDUNG SERBAGUNA</div>
                 <div class="map-wrapper">
-                    <img src="https://via.placeholder.com/400x200?text=Map+Location" alt="Peta Lokasi">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6782914978703!2d101.3768487!3d0.4800329999999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853dac0e9dd%3A0x342428dc6336f4e9!2sFakultas%20Teknik%20(FT)%20-%20Unri!5e0!3m2!1sid!2sid!4v1774632634173!5m2!1sid!2sid"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
     </div>
 
-    <!-- Halaman 5 (Our Story)-->
-    <div class="card">
+    <!-- Halaman 5 (Our Story) -->
+    <div class="card" id="halaman-story">
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
         <div class="page-title">Our Story</div>
         <div class="page-subtitle">Perjalanan & Kisah Kami</div>
@@ -1051,24 +1046,21 @@
             <div class="story-item">
                 <div class="story-date">2 Oktober 2024</div>
                 <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Awal Berkenalan">
+                    <img src="gambar/story1.jpeg" alt="Awal Berkenalan">
                 </div>
                 <div class="story-caption">Awal Berkenalan</div>
             </div>
             <div class="story-item">
                 <div class="story-date">2 Januari 2025</div>
                 <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Mulai Dekat">
+                    <img src="gambar/story2.jpeg" alt="Mulai Dekat">
                 </div>
                 <div class="story-caption">Mulai Dekat</div>
             </div>
             <div class="story-item">
                 <div class="story-date">10 Januari 2025</div>
                 <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Mulai Dekat">
+                    <img src="gambar/galeri3.jpeg" alt="Mulai Dekat">
                 </div>
                 <div class="story-caption">Mulai Dekat</div>
             </div>
@@ -1083,27 +1075,41 @@
         <div class="page-subtitle">Momen Abadi Kami</div>
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 1">
+                <img src="gambar/galeri1.jpeg" alt="Galeri 1">
+            </div>
+            <div class="gallery-item"">
+                <img src=" hiasan/bungaputih.png" alt="Galeri 2" style="height: fit-content; margin-top: 38px;">
             </div>
             <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 2">
-            </div>
-            <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 3">
+                <img src="gambar/galeri2.jpeg" alt="Galeri 3">
             </div>
         </div>
-        <div class="gallery-main">
-            <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                alt="Foto Utama">
+
+        <!-- CAROUSEL KOTAK GAMBAR UTAMA -->
+        <div class="gallery-carousel-container">
+            <div class="gallery-carousel-track" id="gallery-slider">
+
+                <!-- Kotak Card 1 -->
+                <div class="gallery-main">
+                    <img src="gambar/galeri3 copy.jpeg" alt="Foto Utama 1">
+                </div>
+
+                <!-- Kotak Card 2 -->
+                <div class="gallery-main">
+                    <img src="gambar/galeri4.jpeg" alt="Foto Utama 2">
+                </div>
+
+
+            </div>
         </div>
+
+        <!-- TOMBOL NAVBAR BAWAH KIRI-KANAN -->
         <div class="gallery-nav">
-            <i class="fa-solid fa-chevron-left"></i>
+            <i class="fa-solid fa-chevron-left" id="prev-gallery"></i>
             <span>A Story of Us</span>
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-chevron-right" id="next-gallery"></i>
         </div>
+
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
     </div>
 
@@ -1220,6 +1226,67 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // ==========================
+        // LOGIKA SLIDER GALERI
+        // ==========================
+        const slider = document.getElementById('gallery-slider');
+        const prevBtn = document.getElementById('prev-gallery');
+        const nextBtn = document.getElementById('next-gallery');
+        let currentSlideIndex = 0;
+
+        function updateSliderPosition() {
+            slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const totalSlides = slider.children.length;
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+            } else {
+                currentSlideIndex = 0;
+            }
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const totalSlides = slider.children.length;
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+            } else {
+                currentSlideIndex = totalSlides - 1;
+            }
+            updateSliderPosition();
+        });
+
+        // ==========================
+        // LOGIKA ANIMASI SCROLL (FADE IN CARDS)
+        // ==========================
+        // Ini akan mengawasi kapan class .card muncul di layar
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15 // Kartu akan memunculkan animasi jika sudah terlihat 15% bagiannya
+        };
+
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                // Jika bagian kartu sudah menyentuh layar / terlihat
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show-on-scroll');
+                } else {
+                    // Biarkan elemen di-hide lagi ketika keluar dari layar
+                    // (Hapus else ini jika ingin animasinya hanya jalan 1x selamanya)
+                    entry.target.classList.remove('show-on-scroll');
+                }
+            });
+        }, observerOptions);
+
+        // Pasang pengawas (observer) ke semua elemen ber-class .card
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+            scrollObserver.observe(card);
+        });
     </script>
 
 </body>

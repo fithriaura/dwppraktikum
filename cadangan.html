@@ -10,36 +10,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@400;500;600&display=swap"
         rel="stylesheet">
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /*bgluar*/
         body {
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
-            /* Stack cards vertically */
             align-items: center;
             min-height: 100vh;
             background-color: #dceaf8;
             font-family: 'Montserrat', sans-serif;
-
             background-image: url('hiasan/bgluar.png');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
         }
 
-        /*kartu*/
         .card {
             position: relative;
             width: 100%;
             max-width: 420px;
             height: 850px;
             min-height: 850px;
-            /* Ensure fixed height for each "page" */
             max-height: 95vh;
             background-color: transparent;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
@@ -49,8 +43,6 @@
             align-items: center;
             text-align: center;
             margin-bottom: 20px;
-            /* Gap between pages */
-
             background-image: url('hiasan/bgdalam.png');
             background-size: cover;
             background-position: center;
@@ -68,13 +60,297 @@
             left: 0;
         }
 
-
         .decor-bottom {
             bottom: 0;
             left: 0;
         }
 
-        /* Page 1 Styles */
+        /* ===================== */
+        /* HALAMAN COVER         */
+        /* ===================== */
+        #halaman-cover {
+            position: relative;
+            justify-content: flex-start;
+        }
+
+        .cover-the-wedding-of {
+            font-family: 'Great Vibes', cursive;
+            font-size: 42px;
+            color: #832c2c;
+            margin-top: 115px;
+            margin-bottom: 18px;
+            z-index: 10;
+            position: relative;
+            line-height: 1.1;
+        }
+
+        .cover-circle-frame {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            border: 1.5px solid #c5a059;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.18);
+            margin-bottom: 0;
+        }
+
+        .cover-circle-frame::before {
+            content: '';
+            position: absolute;
+            inset: 5px;
+            border-radius: 50%;
+            border: 0.5px solid rgba(197, 160, 89, 0.4);
+        }
+
+        .cover-name-script {
+            font-family: 'Great Vibes', cursive;
+            font-size: 40px;
+            color: #1a1a1a;
+            line-height: 1;
+            display: block;
+        }
+
+        .cover-ampersand {
+            font-family: 'Great Vibes', cursive;
+            font-size: 28px;
+            color: #333;
+            margin: 2px 0;
+            display: block;
+        }
+
+        .cover-kepada {
+            margin-top: 28px;
+            z-index: 10;
+            position: relative;
+            margin-top: 80px;
+        }
+
+        .cover-kepada p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #3a3a3a;
+            margin: 0;
+            line-height: 1.7;
+            font-style: italic;
+        }
+
+        .cover-guest-name-box {
+            width: 220px;
+            min-height: 55px;
+            background-color: #fff;
+            border: 1px solid #b0b0b0;
+            border-radius: 8px;
+            margin: 14px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #333;
+            font-size: 14px;
+            z-index: 10;
+            position: relative;
+            padding: 6px 12px;
+            box-sizing: border-box;
+        }
+
+        .cover-btn-buka {
+            padding: 13px 30px;
+            background-color: #2c4e80;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(44, 78, 128, 0.25);
+            z-index: 10;
+            position: relative;
+            margin-top: 16px;
+            transition: background 0.3s;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .cover-btn-buka:hover {
+            background-color: #1a3355;
+        }
+
+        /* ===================== */
+        /* HALAMAN COUNTDOWN     */
+        /* ===================== */
+        #halaman-countdown {
+            position: relative;
+            justify-content: flex-start;
+        }
+
+        .cd-photo-wrapper {
+            position: relative;
+            margin-top: 110px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .cd-photo-circle {
+            width: 155px;
+            height: 155px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.13);
+            background-color: #dce8f0;
+            display: block;
+        }
+
+        .cd-wreath {
+            margin-top: -22px;
+            z-index: 11;
+            position: relative;
+        }
+
+        .cd-names {
+            z-index: 10;
+            margin-top: 40px;
+            line-height: 1;
+        }
+
+        .cd-name-script {
+            font-family: 'Great Vibes', cursive;
+            font-size: 44px;
+            color: #1a1a1a;
+            display: block;
+            line-height: 1.1;
+        }
+
+        .cd-amp {
+            font-family: 'Great Vibes', cursive;
+            font-size: 30px;
+            color: #333;
+            display: block;
+            margin: 0;
+            line-height: 1.1;
+        }
+
+        .cd-will-hold {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            color: #3a3a3a;
+            margin-top: 10px;
+            z-index: 10;
+            line-height: 1.6;
+        }
+
+        /* Display tanggal */
+        .cd-date-display {
+            display: flex;
+            align-items: stretch;
+            z-index: 10;
+            margin-top: 16px;
+        }
+
+        .cd-date-cell {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 20px;
+            border: 1.5px solid #c5a059;
+        }
+
+        .cd-date-cell+.cd-date-cell {
+            border-left: none;
+        }
+
+        .cd-date-main {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #c5a059;
+            line-height: 1;
+        }
+
+        .cd-date-sub {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            color: #c5a059;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+
+        /* Label countdown */
+        .cd-countdown-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-top: 24px;
+            z-index: 10;
+            letter-spacing: 0.3px;
+        }
+
+        /* Kotak-kotak countdown */
+        .cd-countdown-boxes {
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+            margin-top: 14px;
+        }
+
+        .cd-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+        }
+
+        .cd-box-inner {
+            width: 60px;
+            height: 60px;
+            border: 2px solid #7099bf;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.55);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cd-box-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: #2c4e80;
+            line-height: 1;
+        }
+
+        .cd-box-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 500;
+            color: #4a4a4a;
+            margin-top: 6px;
+        }
+
+        /* ===================== */
+        /* HALAMAN STORY KHUSUS  */
+        /* ===================== */
+        #halaman-story {
+            height: auto;
+            max-height: none;
+            padding-bottom: 150px;
+        }
+
+        /* ===================== */
+        /* HALAMAN LAINNYA       */
+        /* ===================== */
         .names {
             margin-top: 140px;
             z-index: 10;
@@ -123,12 +399,10 @@
             font-weight: 500;
         }
 
-        /* Page 2 Styles */
         .greeting {
             font-family: 'Great Vibes', cursive;
             font-size: 32px;
             color: #832c2c;
-            /* Reddish brown color */
             margin-top: 110px;
             margin-bottom: 10px;
             z-index: 10;
@@ -178,7 +452,6 @@
             min-width: 120px;
         }
 
-        /* Page 3 Styles */
         .page-title {
             font-family: 'Great Vibes', cursive;
             font-size: 42px;
@@ -263,12 +536,11 @@
             object-fit: cover;
         }
 
-        /* Page 4 & 5 Styles */
         .story-container {
             position: relative;
             width: 85%;
             margin-top: 20px;
-            padding-left: 30px;
+            padding-left: 40px;
             text-align: left;
             z-index: 10;
         }
@@ -285,7 +557,6 @@
         .timeline-line::before,
         .timeline-line::after {
             content: "\f004";
-            /* Heart icon */
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
             position: absolute;
@@ -335,35 +606,39 @@
             max-width: 280px;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
             margin-bottom: 8px;
+            border: 2px solid #c5a059;
+            aspect-ratio: 1 / 0.8;
         }
 
         .story-photo-box img {
             width: 100%;
             display: block;
+            object-fit: cover;
         }
 
         .story-caption {
-            font-size: 12px;
+            font-size: 14px;
             color: #666;
             font-style: italic;
+            font-family: 'Times New Roman', Times, serif;
             margin-left: 5px;
         }
 
-        /* Page 6 Styles (Galery) */
+        /* ===================== */
+        /* PERUBAHAN CSS GALERI  */
+        /* ===================== */
         .gallery-grid {
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            gap: 10px;
             width: 85%;
-            margin-top: 20px;
+            margin-top: 1px;
             z-index: 10;
         }
 
         .gallery-item {
             border: 2px solid #c5a059;
-            aspect-ratio: 1 / 1.3;
+            aspect-ratio: 1 / 1.7;
             overflow: hidden;
             background-color: #fff;
         }
@@ -374,18 +649,41 @@
             object-fit: cover;
         }
 
-        .gallery-main {
+        /* Wadah luar carousel untuk menyembunyikan sisi kotak yang bergeser */
+        .gallery-carousel-container {
             width: 85%;
-            margin-top: 15px;
+            overflow: hidden;
+            z-index: 10;
+            margin-top: 5px;
+            padding-bottom: 20px;
+            /* Jarak agar bayangan kotak tidak terpotong */
+        }
+
+        /* Lintasan memanjang untuk menampung kotak-kotak card */
+        .gallery-carousel-track {
+            display: flex;
+            transition: transform 0.4s ease-in-out;
+            width: 100%;
+        }
+
+        /* Modifikasi .gallery-main menjadi Card Slider */
+        .gallery-main {
+            width: 100%;
+            flex-shrink: 0;
+            margin-top: 10px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            z-index: 10;
             border: 1px solid #eee;
+            aspect-ratio: 1/0.8;
+            background-color: #fff;
+            box-sizing: border-box;
         }
 
         .gallery-main img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             display: block;
         }
 
@@ -393,8 +691,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            width: 85%;
-            margin-top: 15px;
+            width: 78%;
+            margin-top: 0px;
             background-color: #fff;
             padding: 10px 15px;
             border-radius: 8px;
@@ -412,9 +710,13 @@
             color: #c5a059;
             font-size: 18px;
             cursor: pointer;
+            padding: 5px;
         }
 
-        /* Page 7 Styles (RSVP / Kirim Pesan) */
+        .gallery-nav i:hover {
+            color: #832c2c;
+        }
+
         .form-container {
             width: 85%;
             margin-top: 20px;
@@ -468,7 +770,6 @@
             width: 100%;
             padding: 12px;
             background-color: #2c4e80;
-            /* Dark blue from example */
             color: #fff;
             border: none;
             border-radius: 8px;
@@ -485,7 +786,6 @@
             background-color: #1a3355;
         }
 
-        /* Page 8 Styles (Titip Hadiah) */
         .gift-box {
             width: 85%;
             border: 1.5px solid #c5a059;
@@ -567,216 +867,6 @@
             line-height: 1.5;
         }
 
-        /* Page 9 Styles (Cover style but as Page 9) */
-        .the-wedding-of {
-            font-family: 'Great Vibes', cursive;
-            font-size: 38px;
-            color: #832c2c;
-            margin-top: 100px;
-            margin-bottom: 10px;
-            z-index: 10;
-        }
-
-        .circle-frame {
-            position: relative;
-            width: 220px;
-            height: 220px;
-            border: 1px solid #c5a059;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            margin: 20px 0;
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        .circle-frame .names-inner {
-            font-family: 'Great Vibes', cursive;
-            font-size: 36px;
-            color: #333;
-            line-height: 1;
-        }
-
-        .circle-frame .ampersand-inner {
-            font-size: 24px;
-            margin: 5px 0;
-            color: #c5a059;
-        }
-
-        .wreath-decor {
-            position: absolute;
-            bottom: -15px;
-            width: 150px;
-            z-index: 11;
-        }
-
-        .guest-info {
-            margin-top: 20px;
-            z-index: 10;
-        }
-
-        .guest-label {
-            font-size: 14px;
-            color: #4a4a4a;
-            margin-bottom: 10px;
-            font-style: italic;
-        }
-
-        .guest-name-box {
-            width: 200px;
-            height: 45px;
-            background-color: #fff;
-            border: 1px solid #333;
-            border-radius: 8px;
-            margin: 0 auto 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .btn-buka {
-            padding: 12px 40px;
-            background-color: #2c4e80;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-        }
-
-        /* ===================== */
-        /* HALAMAN 0 (COVER BARU) */
-        /* ===================== */
-
-        /* Background cover: gradient biru muda lembut */
-        #halaman-cover {
-            position: relative;
-            justify-content: flex-start;
-        }
-
-        .cover-the-wedding-of {
-            font-family: 'Great Vibes', cursive;
-            font-size: 42px;
-            color: #832c2c;
-            margin-top: 115px;
-            margin-bottom: 18px;
-            z-index: 10;
-            position: relative;
-            line-height: 1.1;
-        }
-
-        /* Lingkaran emas dengan nama */
-        .cover-circle-frame {
-            position: relative;
-            width: 200px;
-            height: 200px;
-            border: 1.5px solid #c5a059;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            background-color: rgba(255, 255, 255, 0.18);
-            margin-bottom: 0;
-        }
-
-        .cover-circle-frame::before {
-            content: '';
-            position: absolute;
-            inset: 5px;
-            border-radius: 50%;
-            border: 0.5px solid rgba(197, 160, 89, 0.4);
-        }
-
-        .cover-name-script {
-            font-family: 'Great Vibes', cursive;
-            font-size: 40px;
-            color: #1a1a1a;
-            line-height: 1;
-            display: block;
-        }
-
-        .cover-ampersand {
-            font-family: 'Great Vibes', cursive;
-            font-size: 28px;
-            color: #333;
-            margin: 2px 0;
-            display: block;
-        }
-
-        .cover-wreath-decor {
-            position: relative;
-            z-index: 15;
-            margin-top: -18px;
-        }
-
-        .cover-kepada {
-            margin-top: 28px;
-            z-index: 10;
-            position: relative;
-        }
-
-        .cover-kepada p {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            color: #3a3a3a;
-            margin: 0;
-            line-height: 1.7;
-            font-style: italic;
-        }
-
-        .cover-guest-name-box {
-            width: 220px;
-            min-height: 55px;
-            background-color: #fff;
-            border: 1px solid #b0b0b0;
-            border-radius: 8px;
-            margin: 14px auto 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            color: #333;
-            font-size: 14px;
-            z-index: 10;
-            position: relative;
-            padding: 6px 12px;
-            box-sizing: border-box;
-        }
-
-        .cover-btn-buka {
-            padding: 13px 30px;
-            background-color: #2c4e80;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 14px;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(44, 78, 128, 0.25);
-            z-index: 10;
-            position: relative;
-            margin-top: 16px;
-            transition: background 0.3s;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        .cover-btn-buka:hover {
-            background-color: #1a3355;
-        }
-
         @media (max-width: 480px) {
             .card {
                 height: 100vh;
@@ -784,114 +874,129 @@
                 box-shadow: none;
                 margin-bottom: 0;
             }
+
+            #halaman-story {
+                height: auto;
+                max-height: none;
+            }
         }
     </style>
 </head>
 
 <body>
-    <!-- HALAMAN COVER -->
+
+    <!-- HALAMAN 1 (COVER) -->
     <div class="card" id="halaman-cover">
-
-        <!-- Dekorasi bunga atas (gunakan gambar yang sama dengan halaman lain) -->
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
-        <!-- Teks "The Wedding Of" -->
         <div class="cover-the-wedding-of">The Wedding Of</div>
-
-        <!-- Lingkaran emas dengan nama Aryo & Aura -->
         <div class="cover-circle-frame">
             <span class="cover-name-script">Aryo</span>
             <span class="cover-ampersand">&amp;</span>
             <span class="cover-name-script">Aura</span>
         </div>
-
-        <!-- Dekorasi wreath/bunga di bawah lingkaran (SVG inline mawar biru) -->
-
-        <!-- Kepada Yth -->
         <div class="cover-kepada">
             <p>Kepada Yth.</p>
             <p>Bapak/Ibu/Saudara/i</p>
         </div>
-
-        <!-- Kotak nama tamu -->
-        <div class="cover-guest-name-box">
-            &nbsp;
-        </div>
-
-        <!-- Tombol Buka Undangan -->
+        <div class="cover-guest-name-box">Alexander</div>
         <button class="cover-btn-buka">BUKA UNDANGAN</button>
-
-        <!-- Dekorasi bunga bawah -->
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
-    <!-- Halaman 1 -->
-    <div class="card">
+    <!-- HALAMAN 2 (COUNTDOWN) -->
+    <div class="card" id="halaman-countdown">
 
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
 
-        <div class="names">
-            <h1>Aryo</h1>
-            <h1 class="ampersand">&</h1>
-            <h1>Aura</h1>
-        </div>
-
-        <div class="photo-wrapper">
+        <div class="cd-photo-wrapper">
             <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                alt="Foto Berbingkai Arya & Aura" class="photo-framed">
+                alt="Foto Pasangan" class="cd-photo-circle">
         </div>
 
-        <div class="thank-you">
-            Thank you for your<br>
-            coming & your blessing
+        <div class="cd-names">
+            <span class="cd-name-script">Aryo</span>
+            <span class="cd-amp">&amp;</span>
+            <span class="cd-name-script">Aura</span>
+        </div>
+
+        <div class="cd-will-hold">
+            Akan menyelenggarakan acara<br>pernikahan
+        </div>
+
+        <div class="cd-date-display">
+            <div class="cd-date-cell">
+                <div class="cd-date-sub">SENIN</div>
+            </div>
+            <div class="cd-date-cell">
+                <div class="cd-date-main">10</div>
+                <div class="cd-date-sub">MARET</div>
+            </div>
+            <div class="cd-date-cell">
+                <div class="cd-date-sub">2027</div>
+            </div>
+        </div>
+
+        <div class="cd-countdown-label">Acara akan dimulai dalam</div>
+
+        <div class="cd-countdown-boxes">
+            <div class="cd-box">
+                <div class="cd-box-inner">
+                    <span class="cd-box-number" id="cd-hari">00</span>
+                </div>
+                <div class="cd-box-label">Hari</div>
+            </div>
+            <div class="cd-box">
+                <div class="cd-box-inner">
+                    <span class="cd-box-number" id="cd-jam">00</span>
+                </div>
+                <div class="cd-box-label">Jam</div>
+            </div>
+            <div class="cd-box">
+                <div class="cd-box-inner">
+                    <span class="cd-box-number" id="cd-menit">00</span>
+                </div>
+                <div class="cd-box-label">Menit</div>
+            </div>
+            <div class="cd-box">
+                <div class="cd-box-inner">
+                    <span class="cd-box-number" id="cd-detik">00</span>
+                </div>
+                <div class="cd-box-label">Detik</div>
+            </div>
         </div>
 
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
 
     </div>
 
-    <!-- Halaman 2 -->
+    <!-- Halaman 3 (Ucapan)-->
     <div class="card">
-
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="greeting">Assalammualaikum Wr.Wb</div>
-
         <div class="invitation-text">
             Dengan segala kerendahan hati, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
         </div>
-
         <div class="profile-container">
-            <!-- Mempelai Pria -->
             <div class="profile-box">
                 <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
                     alt="Aryo Abi" class="profile-img-circle">
                 <div class="name-box">Aryo Abi</div>
             </div>
-
-            <!-- Mempelai Wanita -->
             <div class="profile-box">
                 <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
                     alt="Fithri Aura" class="profile-img-circle">
                 <div class="name-box">Fithri Aura</div>
             </div>
         </div>
-
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
-    <!-- Halaman 3 -->
+    <!-- Halaman 4 (Peta) -->
     <div class="card">
-
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="page-title">Save The Date</div>
         <div class="page-subtitle">Waktu dan Tempat</div>
-
         <div class="info-card-container">
-            <!-- Kotak Waktu -->
             <div class="info-box">
                 <div class="info-box-title">Waktu</div>
                 <div class="info-item">
@@ -903,155 +1008,110 @@
                     <span>07.00 WIB</span>
                 </div>
             </div>
-
-            <!-- Kotak Tempat -->
             <div class="info-box">
                 <div class="info-box-title">Tempat</div>
                 <div class="location-name">GEDUNG SERBAGUNA</div>
                 <div class="map-wrapper">
-                    <!-- Placeholder untuk Peta (bisa diganti link gambar peta asli atau iframe) -->
-                    <img src="https://via.placeholder.com/400x200?text=Map+Location" alt="Peta Lokasi">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6782914978703!2d101.3768487!3d0.4800329999999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853dac0e9dd%3A0x342428dc6336f4e9!2sFakultas%20Teknik%20(FT)%20-%20Unri!5e0!3m2!1sid!2sid!4v1774632634173!5m2!1sid!2sid"
+                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
         </div>
-
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
-    <!-- Halaman 4 -->
-    <div class="card">
-
+    <!-- Halaman 5 (Our Story) -->
+    <div class="card" id="halaman-story">
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="page-title">Our Story</div>
         <div class="page-subtitle">Perjalanan & Kisah Kami</div>
-
         <div class="story-container">
             <div class="timeline-line">
-                <!-- Marker Hati Tengah -->
-                <i class="fa-solid fa-heart heart-marker" style="top: 45%;"></i>
+                <i class="fa-solid fa-heart heart-marker" style="top: 35%;"></i>
             </div>
-
-            <!-- Cerita 1 -->
             <div class="story-item">
                 <div class="story-date">2 Oktober 2024</div>
                 <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Awal Berkenalan">
+                    <img src="gambar/story1.jpeg" alt="Awal Berkenalan">
                 </div>
                 <div class="story-caption">Awal Berkenalan</div>
             </div>
-
-            <!-- Cerita 2 -->
             <div class="story-item">
                 <div class="story-date">2 Januari 2025</div>
                 <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Mulai Dekat">
+                    <img src="gambar/story2.jpeg" alt="Mulai Dekat">
+                </div>
+                <div class="story-caption">Mulai Dekat</div>
+            </div>
+            <div class="story-item">
+                <div class="story-date">10 Januari 2025</div>
+                <div class="story-photo-box">
+                    <img src="gambar/galeri3.jpeg" alt="Mulai Dekat">
                 </div>
                 <div class="story-caption">Mulai Dekat</div>
             </div>
         </div>
-
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
-    </div>
-
-    <!-- Halaman 5 (Story Continued) -->
-    <div class="card">
-
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
-        <div class="page-title">Our Story</div>
-        <div class="page-subtitle">Perjalanan & Kisah Kami</div>
-
-        <div class="story-container">
-            <div class="timeline-line">
-                <i class="fa-solid fa-heart heart-marker" style="top: 45%;"></i>
-            </div>
-
-            <!-- Cerita 3 (Menggunakan foto yang berbeda sesuai gambar 5) -->
-            <div class="story-item">
-                <div class="story-date">2 Oktober 2024</div>
-                <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Momen Indah">
-                </div>
-                <div class="story-caption">Momen Indah</div>
-            </div>
-
-            <!-- Cerita 4 -->
-            <div class="story-item">
-                <div class="story-date">2 Januari 2025</div>
-                <div class="story-photo-box">
-                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                        alt="Menuju Halal">
-                </div>
-                <div class="story-caption">Menuju Halal</div>
-            </div>
-        </div>
-
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
     <!-- Halaman 6 (Galery) -->
     <div class="card">
-
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="page-title">Galery</div>
         <div class="page-subtitle">Momen Abadi Kami</div>
-
-        <!-- Grid 3 Foto Atas -->
         <div class="gallery-grid">
             <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 1">
+                <img src="gambar/galeri1.jpeg" alt="Galeri 1">
+            </div>
+            <div class="gallery-item"">
+                <img src=" hiasan/bungaputih.png" alt="Galeri 2" style="height: fit-content; margin-top: 38px;">
             </div>
             <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 2">
-            </div>
-            <div class="gallery-item">
-                <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Galeri 3">
+                <img src="gambar/galeri2.jpeg" alt="Galeri 3">
             </div>
         </div>
 
-        <!-- Foto Utama Tengah -->
-        <div class="gallery-main">
-            <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                alt="Foto Utama">
+        <!-- CAROUSEL KOTAK GAMBAR UTAMA -->
+        <div class="gallery-carousel-container">
+            <div class="gallery-carousel-track" id="gallery-slider">
+
+                <!-- Kotak Card 1 -->
+                <div class="gallery-main">
+                    <img src="gambar/galeri3 copy.jpeg" alt="Foto Utama 1">
+                </div>
+
+                <!-- Kotak Card 2 -->
+                <div class="gallery-main">
+                    <img src="gambar/galeri4.jpeg" alt="Foto Utama 2">
+                </div>
+
+
+            </div>
         </div>
 
-        <!-- Navigasi Bawah -->
+        <!-- TOMBOL NAVBAR BAWAH KIRI-KANAN -->
         <div class="gallery-nav">
-            <i class="fa-solid fa-chevron-left"></i>
+            <i class="fa-solid fa-chevron-left" id="prev-gallery"></i>
             <span>A Story of Us</span>
-            <i class="fa-solid fa-chevron-right"></i>
+            <i class="fa-solid fa-chevron-right" id="next-gallery"></i>
         </div>
 
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
     <!-- Halaman 7 (RSVP / Kirim Pesan) -->
     <div class="card">
-
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="page-title">Kirim Pesan</div>
         <div class="page-subtitle">Berikan ucapan terbaikmu</div>
-
         <div class="form-container">
             <form>
                 <div class="form-group">
                     <label for="nama">Nama</label>
                     <input type="text" id="nama" class="form-control" placeholder="Ahmad">
                 </div>
-
                 <div class="form-group">
                     <label for="konfirmasi">Konfirmasi Kehadiran</label>
                     <select id="konfirmasi" class="form-control">
@@ -1060,44 +1120,33 @@
                         <option value="ragu">Masih Ragu</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label for="pesan">Pesan</label>
                     <textarea id="pesan" class="form-control"
                         placeholder="Tulis ucapan atau pesan Anda di sini..."></textarea>
                 </div>
-
                 <button type="submit" class="btn-kirim">KIRIM</button>
             </form>
         </div>
-
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
     <!-- Halaman 8 (Titip Hadiah) -->
     <div class="card">
-
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-
         <div class="page-title">Titip Hadiah</div>
-
         <div class="invitation-text" style="margin-bottom: 15px; padding: 0 35px;">
             Doa restu Bapak/Ibu sekalian merupakan karunia yang sangat berarti bagi kami. Dan jika memberi merupakan
             ungkapan tanda kasih, Bapak/Ibu dapat memberi kado secara cashless. Terima kasih
         </div>
-
         <div class="gift-box">
             <div class="gift-icon">
                 <i class="fa-solid fa-envelope-open-text"></i>
             </div>
             <div class="gift-subtitle">Amplop Digital</div>
-
             <div class="gift-instruction">
                 Bagi yang ingin mengirim amplop bisa melalui no rekening berikut,
             </div>
-
-            <!-- Rekening 1 -->
             <div class="bank-account-box">
                 <i class="fa-solid fa-credit-card"></i>
                 <div class="account-number">5623xxxxxxx</div>
@@ -1106,8 +1155,6 @@
                 (BNI)<br>
                 Atas nama Aryo Abi Putra
             </div>
-
-            <!-- Rekening 2 -->
             <div class="bank-account-box">
                 <i class="fa-solid fa-wallet"></i>
                 <div class="account-number">0822xxxxxxx</div>
@@ -1117,11 +1164,90 @@
                 Atas nama Aryo Abi Putra
             </div>
         </div>
-
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
     </div>
 
+    <!-- Halaman 9 -->
+    <div class="card">
+        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+        <div class="names">
+            <h1>Aryo</h1>
+            <h1 class="ampersand">&</h1>
+            <h1>Aura</h1>
+        </div>
+        <div class="photo-wrapper">
+            <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
+                alt="Foto Berbingkai Arya & Aura" class="photo-framed">
+        </div>
+        <div class="thank-you">
+            Thank you for your<br>
+            coming & your blessing
+        </div>
+        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+    </div>
+
+    <script>
+        // Target: 10 Maret 2027 jam 07:00 WIB (UTC+7)
+        const targetDate = new Date('2027-03-10T07:00:00+07:00');
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = targetDate - now;
+
+            if (diff <= 0) {
+                ['cd-hari', 'cd-jam', 'cd-menit', 'cd-detik'].forEach(id => {
+                    document.getElementById(id).textContent = '00';
+                });
+                return;
+            }
+
+            const hari = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const jam = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const menit = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const detik = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('cd-hari').textContent = String(hari).padStart(2, '0');
+            document.getElementById('cd-jam').textContent = String(jam).padStart(2, '0');
+            document.getElementById('cd-menit').textContent = String(menit).padStart(2, '0');
+            document.getElementById('cd-detik').textContent = String(detik).padStart(2, '0');
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        // ==========================
+        // LOGIKA SLIDER GALERI
+        // ==========================
+        const slider = document.getElementById('gallery-slider');
+        const prevBtn = document.getElementById('prev-gallery');
+        const nextBtn = document.getElementById('next-gallery');
+        let currentSlideIndex = 0;
+
+        function updateSliderPosition() {
+            // Menggeser kontainer ke kiri/kanan berdasarkan index
+            slider.style.transform = `translateX(-${currentSlideIndex * 100}%)`;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            const totalSlides = slider.children.length;
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+            } else {
+                currentSlideIndex = 0;
+            }
+            updateSliderPosition();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const totalSlides = slider.children.length;
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+            } else {
+                currentSlideIndex = totalSlides - 1;
+            }
+            updateSliderPosition();
+        });
+    </script>
 
 </body>
 
