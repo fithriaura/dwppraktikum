@@ -31,6 +31,7 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
+            overflow-x: hidden;
         }
 
         .card {
@@ -52,16 +53,15 @@
             background-size: cover;
             background-position: center;
             
-            /* EFEK ANIMASI SCROLL: State awal sebelum di-scroll (Tembus pandang dan agak ke bawah) */
+            /* EFEK ANIMASI POPUP SMOOTH (Fade In Scale) */
             opacity: 0;
-            transform: translateY(60px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+            transform: scale(0.85) translateY(40px);
+            transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Class ini akan ditambahkan oleh JS saat kartu masuk ke dalam layar */
         .card.show-on-scroll {
             opacity: 1;
-            transform: translateY(0);
+            transform: scale(1) translateY(0);
         }
 
         .decor-flower {
@@ -189,12 +189,65 @@
             z-index: 10;
             position: relative;
             margin-top: 16px;
-            transition: background 0.3s;
+            transition: background 0.3s, transform 0.2s;
             font-family: 'Montserrat', sans-serif;
         }
 
         .cover-btn-buka:hover {
             background-color: #1a3355;
+        }
+        
+        .cover-btn-buka:active {
+            transform: scale(0.95);
+        }
+
+        /* WRAPPER ISI UNDANGAN AGAR BISA DISEMBUNYIKAN */
+        #isi-undangan {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sembunyi {
+            display: none !important;
+        }
+
+        /* ===================== */
+        /* TOMBOL MUSIK FLOATING */
+        /* ===================== */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px; /* Jika mau di kiri ubah right jadi left: 30px; */
+            width: 45px;
+            height: 45px;
+            background-color: #c5a059;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 9999; /* Agar selalu ada di paling depan */
+            transition: all 0.3s ease;
+        }
+
+        .music-control:active {
+            transform: scale(0.9);
+        }
+
+        /* Animasi kaset berputar */
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .spin-anim {
+            animation: spin 3s linear infinite;
         }
 
         /* ===================== */
@@ -263,7 +316,6 @@
             line-height: 1.6;
         }
 
-        /* Display tanggal */
         .cd-date-display {
             display: flex;
             align-items: stretch;
@@ -302,7 +354,6 @@
             margin-top: 3px;
         }
 
-        /* Label countdown */
         .cd-countdown-label {
             font-family: 'Montserrat', sans-serif;
             font-size: 13px;
@@ -313,7 +364,6 @@
             letter-spacing: 0.3px;
         }
 
-        /* Kotak-kotak countdown */
         .cd-countdown-boxes {
             display: flex;
             gap: 10px;
@@ -897,8 +947,18 @@
 
 <body>
 
+    <!-- FILE AUDIO UNTUK BACKGROUND MUSIK (Jangan Lupa Ganti SRC nya) -->
+    <audio id="bg-music" loop>
+        <source src="backsound.mp3".mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- TOMBOL MUSIK FLOATING -->
+    <div id="music-control" class="music-control sembunyi">
+        <i class="fa-solid fa-compact-disc" id="music-icon"></i>
+    </div>
+
     <!-- HALAMAN 1 (COVER) -->
-    <div class="card" id="halaman-cover">
+    <div class="card" id="halaman-cover" style="opacity: 1; transform: scale(1) translateY(0);">
         <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
         <div class="cover-the-wedding-of">The Wedding Of</div>
         <div class="cover-circle-frame">
@@ -915,290 +975,348 @@
         <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
     </div>
 
-    <!-- HALAMAN 2 (COUNTDOWN) -->
-    <div class="card" id="halaman-countdown">
+    <!-- WRAPPER ISI UNDANGAN (DISEMBUNYIKAN SEBELUM TOMBOL DITEKAN) -->
+    <div id="isi-undangan" class="sembunyi">
 
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+        <!-- HALAMAN 2 (COUNTDOWN) -->
+        <div class="card" id="halaman-countdown">
 
-        <div class="cd-photo-wrapper">
-            <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                alt="Foto Pasangan" class="cd-photo-circle">
-        </div>
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
 
-        <div class="cd-names">
-            <span class="cd-name-script">Aryo</span>
-            <span class="cd-amp">&amp;</span>
-            <span class="cd-name-script">Aura</span>
-        </div>
-
-        <div class="cd-will-hold">
-            Akan menyelenggarakan acara<br>pernikahan
-        </div>
-
-        <div class="cd-date-display">
-            <div class="cd-date-cell">
-                <div class="cd-date-sub">SENIN</div>
-            </div>
-            <div class="cd-date-cell">
-                <div class="cd-date-main">10</div>
-                <div class="cd-date-sub">MARET</div>
-            </div>
-            <div class="cd-date-cell">
-                <div class="cd-date-sub">2027</div>
-            </div>
-        </div>
-
-        <div class="cd-countdown-label">Acara akan dimulai dalam</div>
-
-        <div class="cd-countdown-boxes">
-            <div class="cd-box">
-                <div class="cd-box-inner">
-                    <span class="cd-box-number" id="cd-hari">00</span>
-                </div>
-                <div class="cd-box-label">Hari</div>
-            </div>
-            <div class="cd-box">
-                <div class="cd-box-inner">
-                    <span class="cd-box-number" id="cd-jam">00</span>
-                </div>
-                <div class="cd-box-label">Jam</div>
-            </div>
-            <div class="cd-box">
-                <div class="cd-box-inner">
-                    <span class="cd-box-number" id="cd-menit">00</span>
-                </div>
-                <div class="cd-box-label">Menit</div>
-            </div>
-            <div class="cd-box">
-                <div class="cd-box-inner">
-                    <span class="cd-box-number" id="cd-detik">00</span>
-                </div>
-                <div class="cd-box-label">Detik</div>
-            </div>
-        </div>
-
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-
-    </div>
-
-    <!-- Halaman 3 (Ucapan)-->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="greeting">Assalammualaikum Wr.Wb</div>
-        <div class="invitation-text">
-            Dengan segala kerendahan hati, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
-        </div>
-        <div class="profile-container">
-            <div class="profile-box">
+            <div class="cd-photo-wrapper">
                 <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Aryo Abi" class="profile-img-circle">
-                <div class="name-box">Aryo Abi</div>
+                    alt="Foto Pasangan" class="cd-photo-circle">
             </div>
-            <div class="profile-box">
+
+            <div class="cd-names">
+                <span class="cd-name-script">Aryo</span>
+                <span class="cd-amp">&amp;</span>
+                <span class="cd-name-script">Aura</span>
+            </div>
+
+            <div class="cd-will-hold">
+                Akan menyelenggarakan acara<br>pernikahan
+            </div>
+
+            <div class="cd-date-display">
+                <div class="cd-date-cell">
+                    <div class="cd-date-sub">SENIN</div>
+                </div>
+                <div class="cd-date-cell">
+                    <div class="cd-date-main">10</div>
+                    <div class="cd-date-sub">MARET</div>
+                </div>
+                <div class="cd-date-cell">
+                    <div class="cd-date-sub">2027</div>
+                </div>
+            </div>
+
+            <div class="cd-countdown-label">Acara akan dimulai dalam</div>
+
+            <div class="cd-countdown-boxes">
+                <div class="cd-box">
+                    <div class="cd-box-inner">
+                        <span class="cd-box-number" id="cd-hari">00</span>
+                    </div>
+                    <div class="cd-box-label">Hari</div>
+                </div>
+                <div class="cd-box">
+                    <div class="cd-box-inner">
+                        <span class="cd-box-number" id="cd-jam">00</span>
+                    </div>
+                    <div class="cd-box-label">Jam</div>
+                </div>
+                <div class="cd-box">
+                    <div class="cd-box-inner">
+                        <span class="cd-box-number" id="cd-menit">00</span>
+                    </div>
+                    <div class="cd-box-label">Menit</div>
+                </div>
+                <div class="cd-box">
+                    <div class="cd-box-inner">
+                        <span class="cd-box-number" id="cd-detik">00</span>
+                    </div>
+                    <div class="cd-box-label">Detik</div>
+                </div>
+            </div>
+
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+
+        </div>
+
+        <!-- Halaman 3 (Ucapan)-->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="greeting">Assalammualaikum Wr.Wb</div>
+            <div class="invitation-text">
+                Dengan segala kerendahan hati, kami mengundang Bapak/Ibu/Saudara/i untuk menghadiri pernikahan kami
+            </div>
+            <div class="profile-container">
+                <div class="profile-box">
+                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
+                        alt="Aryo Abi" class="profile-img-circle">
+                    <div class="name-box">Aryo Abi</div>
+                </div>
+                <div class="profile-box">
+                    <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
+                        alt="Fithri Aura" class="profile-img-circle">
+                    <div class="name-box">Fithri Aura</div>
+                </div>
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 4 (Peta) -->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="page-title">Save The Date</div>
+            <div class="page-subtitle">Waktu dan Tempat</div>
+            <div class="info-card-container">
+                <div class="info-box">
+                    <div class="info-box-title">Waktu</div>
+                    <div class="info-item">
+                        <i class="fa-regular fa-calendar-check"></i>
+                        <span>10 MARET 2030</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>07.00 WIB</span>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-title">Tempat</div>
+                    <div class="location-name">GEDUNG SERBAGUNA</div>
+                    <div class="map-wrapper">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6782914978703!2d101.3768487!3d0.4800329999999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853dac0e9dd%3A0x342428dc6336f4e9!2sFakultas%20Teknik%20(FT)%20-%20Unri!5e0!3m2!1sid!2sid!4v1774632634173!5m2!1sid!2sid"
+                            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 5 (Our Story) -->
+        <div class="card" id="halaman-story">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="page-title">Our Story</div>
+            <div class="page-subtitle">Perjalanan & Kisah Kami</div>
+            <div class="story-container">
+                <div class="timeline-line">
+                    <i class="fa-solid fa-heart heart-marker" style="top: 35%;"></i>
+                </div>
+                <div class="story-item">
+                    <div class="story-date">2 Oktober 2024</div>
+                    <div class="story-photo-box">
+                        <img src="gambar/story1.jpeg" alt="Awal Berkenalan">
+                    </div>
+                    <div class="story-caption">Awal Berkenalan</div>
+                </div>
+                <div class="story-item">
+                    <div class="story-date">2 Januari 2025</div>
+                    <div class="story-photo-box">
+                        <img src="gambar/story2.jpeg" alt="Mulai Dekat">
+                    </div>
+                    <div class="story-caption">Mulai Dekat</div>
+                </div>
+                <div class="story-item">
+                    <div class="story-date">10 Januari 2025</div>
+                    <div class="story-photo-box">
+                        <img src="gambar/galeri3.jpeg" alt="Mulai Dekat">
+                    </div>
+                    <div class="story-caption">Mulai Dekat</div>
+                </div>
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 6 (Galery) -->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="page-title">Galery</div>
+            <div class="page-subtitle">Momen Abadi Kami</div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="gambar/galeri1.jpeg" alt="Galeri 1">
+                </div>
+                <div class="gallery-item"">
+                    <img src=" hiasan/bungaputih.png" alt="Galeri 2" style="height: fit-content; margin-top: 38px;">
+                </div>
+                <div class="gallery-item">
+                    <img src="gambar/galeri2.jpeg" alt="Galeri 3">
+                </div>
+            </div>
+
+            <!-- CAROUSEL KOTAK GAMBAR UTAMA -->
+            <div class="gallery-carousel-container">
+                <div class="gallery-carousel-track" id="gallery-slider">
+
+                    <!-- Kotak Card 1 -->
+                    <div class="gallery-main">
+                        <img src="gambar/galeri3 copy.jpeg" alt="Foto Utama 1">
+                    </div>
+
+                    <!-- Kotak Card 2 -->
+                    <div class="gallery-main">
+                        <img src="gambar/galeri4.jpeg" alt="Foto Utama 2">
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- TOMBOL NAVBAR BAWAH KIRI-KANAN -->
+            <div class="gallery-nav">
+                <i class="fa-solid fa-chevron-left" id="prev-gallery"></i>
+                <span>A Story of Us</span>
+                <i class="fa-solid fa-chevron-right" id="next-gallery"></i>
+            </div>
+
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 7 (RSVP / Kirim Pesan) -->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="page-title">Kirim Pesan</div>
+            <div class="page-subtitle">Berikan ucapan terbaikmu</div>
+            <div class="form-container">
+                <form>
+                    <div class="form-group">
+                        <label for="nama">Nama</label>
+                        <input type="text" id="nama" class="form-control" placeholder="Ahmad">
+                    </div>
+                    <div class="form-group">
+                        <label for="konfirmasi">Konfirmasi Kehadiran</label>
+                        <select id="konfirmasi" class="form-control">
+                            <option value="hadir">Hadir</option>
+                            <option value="tidak_hadir">Tidak Hadir</option>
+                            <option value="ragu">Masih Ragu</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="pesan">Pesan</label>
+                        <textarea id="pesan" class="form-control"
+                            placeholder="Tulis ucapan atau pesan Anda di sini..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-kirim">KIRIM</button>
+                </form>
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 8 (Titip Hadiah) -->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="page-title">Titip Hadiah</div>
+            <div class="invitation-text" style="margin-bottom: 15px; padding: 0 35px;">
+                Doa restu Bapak/Ibu sekalian merupakan karunia yang sangat berarti bagi kami. Dan jika memberi merupakan
+                ungkapan tanda kasih, Bapak/Ibu dapat memberi kado secara cashless. Terima kasih
+            </div>
+            <div class="gift-box">
+                <div class="gift-icon">
+                    <i class="fa-solid fa-envelope-open-text"></i>
+                </div>
+                <div class="gift-subtitle">Amplop Digital</div>
+                <div class="gift-instruction">
+                    Bagi yang ingin mengirim amplop bisa melalui no rekening berikut,
+                </div>
+                <div class="bank-account-box">
+                    <i class="fa-solid fa-credit-card"></i>
+                    <div class="account-number">5623xxxxxxx</div>
+                </div>
+                <div class="account-details">
+                    (BNI)<br>
+                    Atas nama Aryo Abi Putra
+                </div>
+                <div class="bank-account-box">
+                    <i class="fa-solid fa-wallet"></i>
+                    <div class="account-number">0822xxxxxxx</div>
+                </div>
+                <div class="account-details">
+                    (Dana, Gopay, OVO)<br>
+                    Atas nama Aryo Abi Putra
+                </div>
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+        </div>
+
+        <!-- Halaman 9 -->
+        <div class="card">
+            <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
+            <div class="names">
+                <h1>Aryo</h1>
+                <h1 class="ampersand">&</h1>
+                <h1>Aura</h1>
+            </div>
+            <div class="photo-wrapper">
                 <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                    alt="Fithri Aura" class="profile-img-circle">
-                <div class="name-box">Fithri Aura</div>
+                    alt="Foto Berbingkai Arya & Aura" class="photo-framed">
             </div>
+            <div class="thank-you">
+                Thank you for your<br>
+                coming & your blessing
+            </div>
+            <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
         </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
+
     </div>
-
-    <!-- Halaman 4 (Peta) -->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="page-title">Save The Date</div>
-        <div class="page-subtitle">Waktu dan Tempat</div>
-        <div class="info-card-container">
-            <div class="info-box">
-                <div class="info-box-title">Waktu</div>
-                <div class="info-item">
-                    <i class="fa-regular fa-calendar-check"></i>
-                    <span>10 MARET 2030</span>
-                </div>
-                <div class="info-item">
-                    <i class="fa-regular fa-clock"></i>
-                    <span>07.00 WIB</span>
-                </div>
-            </div>
-            <div class="info-box">
-                <div class="info-box-title">Tempat</div>
-                <div class="location-name">GEDUNG SERBAGUNA</div>
-                <div class="map-wrapper">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6782914978703!2d101.3768487!3d0.4800329999999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853dac0e9dd%3A0x342428dc6336f4e9!2sFakultas%20Teknik%20(FT)%20-%20Unri!5e0!3m2!1sid!2sid!4v1774632634173!5m2!1sid!2sid"
-                        width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-            </div>
-        </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
-
-    <!-- Halaman 5 (Our Story) -->
-    <div class="card" id="halaman-story">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="page-title">Our Story</div>
-        <div class="page-subtitle">Perjalanan & Kisah Kami</div>
-        <div class="story-container">
-            <div class="timeline-line">
-                <i class="fa-solid fa-heart heart-marker" style="top: 35%;"></i>
-            </div>
-            <div class="story-item">
-                <div class="story-date">2 Oktober 2024</div>
-                <div class="story-photo-box">
-                    <img src="gambar/story1.jpeg" alt="Awal Berkenalan">
-                </div>
-                <div class="story-caption">Awal Berkenalan</div>
-            </div>
-            <div class="story-item">
-                <div class="story-date">2 Januari 2025</div>
-                <div class="story-photo-box">
-                    <img src="gambar/story2.jpeg" alt="Mulai Dekat">
-                </div>
-                <div class="story-caption">Mulai Dekat</div>
-            </div>
-            <div class="story-item">
-                <div class="story-date">10 Januari 2025</div>
-                <div class="story-photo-box">
-                    <img src="gambar/galeri3.jpeg" alt="Mulai Dekat">
-                </div>
-                <div class="story-caption">Mulai Dekat</div>
-            </div>
-        </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
-
-    <!-- Halaman 6 (Galery) -->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="page-title">Galery</div>
-        <div class="page-subtitle">Momen Abadi Kami</div>
-        <div class="gallery-grid">
-            <div class="gallery-item">
-                <img src="gambar/galeri1.jpeg" alt="Galeri 1">
-            </div>
-            <div class="gallery-item"">
-                <img src=" hiasan/bungaputih.png" alt="Galeri 2" style="height: fit-content; margin-top: 38px;">
-            </div>
-            <div class="gallery-item">
-                <img src="gambar/galeri2.jpeg" alt="Galeri 3">
-            </div>
-        </div>
-
-        <!-- CAROUSEL KOTAK GAMBAR UTAMA -->
-        <div class="gallery-carousel-container">
-            <div class="gallery-carousel-track" id="gallery-slider">
-
-                <!-- Kotak Card 1 -->
-                <div class="gallery-main">
-                    <img src="gambar/galeri3 copy.jpeg" alt="Foto Utama 1">
-                </div>
-
-                <!-- Kotak Card 2 -->
-                <div class="gallery-main">
-                    <img src="gambar/galeri4.jpeg" alt="Foto Utama 2">
-                </div>
-
-
-            </div>
-        </div>
-
-        <!-- TOMBOL NAVBAR BAWAH KIRI-KANAN -->
-        <div class="gallery-nav">
-            <i class="fa-solid fa-chevron-left" id="prev-gallery"></i>
-            <span>A Story of Us</span>
-            <i class="fa-solid fa-chevron-right" id="next-gallery"></i>
-        </div>
-
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
-
-    <!-- Halaman 7 (RSVP / Kirim Pesan) -->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="page-title">Kirim Pesan</div>
-        <div class="page-subtitle">Berikan ucapan terbaikmu</div>
-        <div class="form-container">
-            <form>
-                <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" id="nama" class="form-control" placeholder="Ahmad">
-                </div>
-                <div class="form-group">
-                    <label for="konfirmasi">Konfirmasi Kehadiran</label>
-                    <select id="konfirmasi" class="form-control">
-                        <option value="hadir">Hadir</option>
-                        <option value="tidak_hadir">Tidak Hadir</option>
-                        <option value="ragu">Masih Ragu</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="pesan">Pesan</label>
-                    <textarea id="pesan" class="form-control"
-                        placeholder="Tulis ucapan atau pesan Anda di sini..."></textarea>
-                </div>
-                <button type="submit" class="btn-kirim">KIRIM</button>
-            </form>
-        </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
-
-    <!-- Halaman 8 (Titip Hadiah) -->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="page-title">Titip Hadiah</div>
-        <div class="invitation-text" style="margin-bottom: 15px; padding: 0 35px;">
-            Doa restu Bapak/Ibu sekalian merupakan karunia yang sangat berarti bagi kami. Dan jika memberi merupakan
-            ungkapan tanda kasih, Bapak/Ibu dapat memberi kado secara cashless. Terima kasih
-        </div>
-        <div class="gift-box">
-            <div class="gift-icon">
-                <i class="fa-solid fa-envelope-open-text"></i>
-            </div>
-            <div class="gift-subtitle">Amplop Digital</div>
-            <div class="gift-instruction">
-                Bagi yang ingin mengirim amplop bisa melalui no rekening berikut,
-            </div>
-            <div class="bank-account-box">
-                <i class="fa-solid fa-credit-card"></i>
-                <div class="account-number">5623xxxxxxx</div>
-            </div>
-            <div class="account-details">
-                (BNI)<br>
-                Atas nama Aryo Abi Putra
-            </div>
-            <div class="bank-account-box">
-                <i class="fa-solid fa-wallet"></i>
-                <div class="account-number">0822xxxxxxx</div>
-            </div>
-            <div class="account-details">
-                (Dana, Gopay, OVO)<br>
-                Atas nama Aryo Abi Putra
-            </div>
-        </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
-
-    <!-- Halaman 9 -->
-    <div class="card">
-        <img src="hiasan/bungaats.png" alt="Dekorasi Bunga Atas" class="decor-flower decor-top">
-        <div class="names">
-            <h1>Aryo</h1>
-            <h1 class="ampersand">&</h1>
-            <h1>Aura</h1>
-        </div>
-        <div class="photo-wrapper">
-            <img src="hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png"
-                alt="Foto Berbingkai Arya & Aura" class="photo-framed">
-        </div>
-        <div class="thank-you">
-            Thank you for your<br>
-            coming & your blessing
-        </div>
-        <img src="hiasan/bungabawah.png" alt="Dekorasi Bunga Bawah" class="decor-flower decor-bottom">
-    </div>
+    <!-- AKHIR DARI WRAPPER ISI UNDANGAN -->
 
     <script>
+        // ==========================
+        // LOGIKA BUKA UNDANGAN & MUSIK
+        // ==========================
+        const btnBuka = document.querySelector('.cover-btn-buka');
+        const halamanCover = document.getElementById('halaman-cover');
+        const isiUndangan = document.getElementById('isi-undangan');
+        
+        // Element Audio
+        const bgMusic = document.getElementById('bg-music');
+        const musicControl = document.getElementById('music-control');
+        const musicIcon = document.getElementById('music-icon');
+        let isPlaying = false;
+
+        btnBuka.addEventListener('click', () => {
+            // Putar musik secara otomatis ketika Buka Undangan ditekan
+            bgMusic.play().then(() => {
+                isPlaying = true;
+                musicIcon.classList.add('spin-anim');
+            }).catch((e) => {
+                console.log("Autoplay ditolak oleh browser: " + e);
+            });
+            
+            // Tampilkan tombol musik
+            musicControl.classList.remove('sembunyi');
+
+            // Berikan animasi ke halaman cover (Membesar sedikit dan pudar)
+            halamanCover.style.transition = 'all 0.8s ease-in-out';
+            halamanCover.style.opacity = '0';
+            halamanCover.style.transform = 'scale(1.1) translateY(-50px)';
+            
+            // Tunggu animasi selesai, lalu hilangkan dari website
+            setTimeout(() => {
+                halamanCover.style.display = 'none'; // Menghilangkan cover 100%
+                isiUndangan.classList.remove('sembunyi'); // Menampilkan sisa undangan
+                window.scrollTo(0, 0); // Memastikan layar berada di atas halaman countdown
+            }, 800); // 800ms sama dengan waktu transition cover
+        });
+
+        // Kontrol Play/Pause ketika tombol musik ditekan
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicIcon.classList.remove('spin-anim'); // Hentikan animasi putar
+            } else {
+                bgMusic.play();
+                musicIcon.classList.add('spin-anim'); // Putar animasi kaset
+            }
+            isPlaying = !isPlaying;
+        });
+
+        // ==========================
+        // COUNTDOWN
+        // ==========================
         // Target: 10 Maret 2027 jam 07:00 WIB (UTC+7)
         const targetDate = new Date('2027-03-10T07:00:00+07:00');
 
@@ -1260,29 +1378,24 @@
         });
 
         // ==========================
-        // LOGIKA ANIMASI SCROLL (FADE IN CARDS)
+        // LOGIKA ANIMASI SCROLL (FADE IN SCALE)
         // ==========================
-        // Ini akan mengawasi kapan class .card muncul di layar
         const observerOptions = {
             root: null,
             rootMargin: '0px',
-            threshold: 0.15 // Kartu akan memunculkan animasi jika sudah terlihat 15% bagiannya
+            threshold: 0.15 
         };
 
         const scrollObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
-                // Jika bagian kartu sudah menyentuh layar / terlihat
                 if (entry.isIntersecting) {
                     entry.target.classList.add('show-on-scroll');
                 } else {
-                    // Biarkan elemen di-hide lagi ketika keluar dari layar
-                    // (Hapus else ini jika ingin animasinya hanya jalan 1x selamanya)
                     entry.target.classList.remove('show-on-scroll');
                 }
             });
         }, observerOptions);
 
-        // Pasang pengawas (observer) ke semua elemen ber-class .card
         const allCards = document.querySelectorAll('.card');
         allCards.forEach(card => {
             scrollObserver.observe(card);
