@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin - Kelola Undangan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #4287f5 0%, #2b6cb0 100%);
+            --glass-bg: rgba(255, 255, 255, 0.2);
+            --glass-border: rgba(255, 255, 255, 0.3);
+            --glass-blur: blur(10px);
+            --pill-radius: 50px;
+            --card-radius: 25px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background-image: url('background admin.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            z-index: -1;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* ========== SIDEBAR ========== */
+        .sidebar {
+            width: 260px;
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-right: 1px solid var(--glass-border);
+            padding: 25px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--glass-border);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-logo i {
+            font-size: 28px;
+            color: #4287f5;
+        }
+
+        .sidebar-logo span {
+            font-size: 18px;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 18px;
+            border-radius: var(--pill-radius);
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .nav-item.active {
+            background: var(--primary-gradient);
+            color: #fff;
+        }
+
+        .nav-item i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* ========== MAIN CONTENT ========== */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 30px;
+        }
+
+        .content-header {
+            margin-bottom: 30px;
+        }
+
+        .content-header h1 {
+            font-size: 26px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 5px;
+        }
+
+        .content-header p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* ========== GLASSCARD ========== */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: var(--glass-blur);
+            -webkit-backdrop-filter: var(--glass-blur);
+            border-radius: var(--card-radius);
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .glass-card h2 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        /* ========== FORM ELEMENTS ========== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: var(--pill-radius);
+            background: rgba(255, 255, 255, 0.85);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            color: #333;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .form-input::placeholder {
+            color: #999;
+        }
+
+        .form-input:focus {
+            box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.3);
+        }
+
+        textarea.form-input {
+            resize: vertical;
+            min-height: 100px;
+            border-radius: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--pill-radius);
+            font-family: 'Poppins', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(66, 135, 245, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.6);
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-danger {
+            background: linear-gradient(135deg, #e53e3e 0%, #c53030 100%);
+            color: #fff;
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        /* ========== SECTION PAGES ========== */
+        .section-page {
+            display: none;
+        }
+
+        .section-page.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ========== TABLE ========== */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 14px 18px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        .data-table th {
+            background: rgba(66, 135, 245, 0.15);
+            font-weight: 600;
+            color: #333;
+        }
+
+        .data-table tr:not(:last-child) td {
+            border-bottom: 1px solid rgba(66, 135, 245, 0.1);
+        }
+
+        .data-table td {
+            color: #444;
+        }
+
+        .table-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .table-actions button {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .table-actions .btn-edit {
+            background: #4299e1;
+            color: #fff;
+        }
+
+        .table-actions .btn-delete {
+            background: #f56565;
+            color: #fff;
+        }
+
+        /* ========== GALLERY MANAGER ========== */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 15px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item .remove-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(229, 62, 62, 0.9);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .remove-btn {
+            opacity: 1;
+        }
+
+        .add-gallery-btn {
+            aspect-ratio: 1;
+            border: 2px dashed rgba(66, 135, 245, 0.5);
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #4287f5;
+            transition: var(--transition);
+        }
+
+        .add-gallery-btn:hover {
+            background: rgba(66, 135, 245, 0.1);
+            border-color: #4287f5;
+        }
+
+        .add-gallery-btn i {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .add-gallery-btn span {
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .gallery-section-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #333;
+            margin: 25px 0 15px;
+        }
+
+        /* ========== STORY ITEMS ========== */
+        .story-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .story-item-card {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 20px;
+            align-items: start;
+        }
+
+        .story-item-card .story-img-preview {
+            width: 120px;
+            height: 90px;
+            border-radius: 10px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .story-item-card .story-fields {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .story-item-card .story-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* ========== GUEST LINK ========== */
+        .link-generator {
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .generated-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f7fafc;
+            padding: 12px 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .generated-link input {
+            flex: 1;
+            border: none;
+            background: transparent;
+            font-family: monospace;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .generated-link button {
+            padding: 8px 15px;
+            background: #4299e1;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* ========== MEDIA QUERIES ========== */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                padding: 20px 12px;
+            }
+            .sidebar-logo span,
+            .nav-item span {
+                display: none;
+            }
+            .nav-item {
+                justify-content: center;
+                padding: 14px;
+            }
+            .main-content {
+                margin-left: 70px;
+                padding: 20px;
+            }
+            .story-item-card {
+                grid-template-columns: 1fr;
+            }
+            .story-item-card .story-img-preview {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="dashboard-container">
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fa-solid fa-envelope-open-text"></i>
+                <span>Admin</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a class="nav-item active" data-section="mempelai">
+                    <i class="fa-solid fa-user-heart"></i>
+                    <span>Data Mempelai</span>
+                </a>
+                <a class="nav-item" data-section="story">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>Kisah Cinta</span>
+                </a>
+                <a class="nav-item" data-section="tamu">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Daftar Tamu</span>
+                </a>
+                <a class="nav-item" data-section="galeri">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Galeri</span>
+                </a>
+                <a class="nav-item" data-section="waktu">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    <span>Waktu & Tempat</span>
+                </a>
+                <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.3);">
+                    <div class="nav-item" style="cursor: pointer;" onclick="logout()">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content">
+            <!-- SECTION: DATA MEMPELAI -->
+            <section id="mempelai" class="section-page active">
+                <div class="content-header">
+                    <h1>Data Mempelai</h1>
+                    <p>Kelola informasi pengantin pria dan wanita</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Identitas Pengantin Pria</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" class="form-input" id="pria-nama" placeholder="Aryo Abi" data-target="cover-name-script">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Panggilan</label>
+                            <input type="text" class="form-input" id="pria-panggilan" placeholder="Aryo">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Ayah</label>
+                            <input type="text" class="form-input" id="pria-ayah" placeholder="Nama Ayah">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Ibu</label>
+                            <input type="text" class="form-input" id="pria-ibu" placeholder="Nama Ibu">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Identitas Pengantin Wanita</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" class="form-input" id="wanita-nama" placeholder="Fithri Aura" data-target="cover-name-script">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Panggilan</label>
+                            <input type="text" class="form-input" id="wanita-panggilan" placeholder="Aura">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Ayah</label>
+                            <input type="text" class="form-input" id="wanita-ayah" placeholder="Nama Ayah">
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Ibu</label>
+                            <input type="text" class="form-input" id="wanita-ibu" placeholder="Nama Ibu">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Foto Pasangan</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Foto Utama(Circle)</label>
+                            <input type="file" class="form-input" id="pria-foto" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label>Foto Utama(Couple)</label>
+                            <input type="file" class="form-input" id="couple-foto" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="saveMempelai()">
+                        <i class="fa-solid fa-save"></i> Simpan Perubahan
+                    </button>
+                    <button class="btn btn-secondary" onclick="previewUndangan()">
+                        <i class="fa-solid fa-eye"></i> Preview
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION: STORY -->
+            <section id="story" class="section-page">
+                <div class="content-header">
+                    <h1>Kisah Cinta</h1>
+                    <p>Kelola timeline perjalanan cinta kalian</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Tambah Kisah Baru</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tanggal</label>
+                            <input type="date" class="form-input" id="story-tanggal">
+                        </div>
+                        <div class="form-group">
+                            <label>Judul Kisah</label>
+                            <input type="text" class="form-input" id="story-judul" placeholder="Awal Berkenalan">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Deskripsi</label>
+                            <textarea class="form-input" id="story-deskripsi" placeholder="Ceritakan momen ini..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Gambar</label>
+                            <input type="file" class="form-input" id="story-gambar" accept="image/*">
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="addStory()">
+                            <i class="fa-solid fa-plus"></i> Tambah Story
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Daftar Kisah</h2>
+                    <div class="story-list" id="storyList">
+                        <!-- Story items akan di-render oleh JS -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: DAFTAR TAMU -->
+            <section id="tamu" class="section-page">
+                <div class="content-header">
+                    <h1>Daftar Tamu</h1>
+                    <p>Kelola data tamu dan generate link undangan</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Tambah Tamu Baru</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Tamu</label>
+                            <input type="text" class="form-input" id="tamu-nama" placeholder="Budi Santoso">
+                        </div>
+                        <div class="form-group">
+                            <label>Kategori</label>
+                            <select class="form-input" id="tamu-kategori">
+                                <option value="keluarga">Keluarga</option>
+                                <option value="teman">Teman</option>
+                                <option value="rekan">Rekan Kerja</option>
+                                <option value="tetangga">Tetangga</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>No. WhatsApp</label>
+                            <input type="tel" class="form-input" id="tamu-wa" placeholder="081234567890">
+                        </div>
+                        <div class="form-group">
+                            <label>Konfirmasi</label>
+                            <select class="form-input" id="tamu-konfirmasi">
+                                <option value="belum">Belum Dikonfirmasi</option>
+                                <option value="hadir">Hadir</option>
+                                <option value="tidak_hadir">Tidak Hadir</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn btn-primary" onclick="addTamu()">
+                            <i class="fa-solid fa-user-plus"></i> Tambah Tamu
+                        </button>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Link Undangan Tamu</h2>
+                    <div class="link-generator">
+                        <div class="form-group">
+                            <label>Pilih Tamu untuk Generate Link</label>
+                            <select class="form-input" id="select-tamu-link" onchange="generateLink()">
+                                <option value="">-- Pilih Tamu --</option>
+                            </select>
+                        </div>
+                        <div class="generated-link" id="generatedLink" style="display: none;">
+                            <i class="fa-solid fa-link" style="color: #4287f5;"></i>
+                            <input type="text" id="linkOutput" readonly>
+                            <button onclick="copyLink()">
+                                <i class="fa-solid fa-copy"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Daftar Tamu</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Kategori</th>
+                                <th>WA</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tamuTableBody">
+                            <!-- Table rows akan di-render oleh JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION: GALERI -->
+            <section id="galeri" class="section-page">
+                <div class="content-header">
+                    <h1>Kelola Galeri</h1>
+                    <p>Atur gambar untuk grid dan carousel galeri</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Grid Gambar Galeri</h2>
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Gallery items akan di-render oleh JS -->
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Carousel Gambar Utama</h2>
+                    <div class="gallery-grid" id="galleryCarousel">
+                        <!-- Carousel items akan di-render oleh JS -->
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="saveGaleri()">
+                        <i class="fa-solid fa-save"></i> Simpan Galeri
+                    </button>
+                </div>
+            </section>
+
+            <!-- SECTION: WAKTU & TEMPAT -->
+            <section id="waktu" class="section-page">
+                <div class="content-header">
+                    <h1>Waktu & Tempat</h1>
+                    <p>Kelola detail acara pernikahan</p>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Informasi Waktu</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tanggal Akad</label>
+                            <input type="date" class="form-input" id="event-tanggal">
+                        </div>
+                        <div class="form-group">
+                            <label>Jam Akad</label>
+                            <input type="time" class="form-input" id="event-jam">
+                        </div>
+                        <div class="form-group">
+                            <label>Tanggal Resepsi</label>
+                            <input type="date" class="form-input" id="resepsi-tanggal">
+                        </div>
+                        <div class="form-group">
+                            <label>Jam Resepsi</label>
+                            <input type="time" class="form-input" id="resepsi-jam">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Lokasi Acara</h2>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Nama Tempat</label>
+                            <input type="text" class="form-input" id="tempat-nama" placeholder="Gedung Serbaguna">
+                        </div>
+                        <div class="form-group">
+                            <label>Provinsi</label>
+                            <input type="text" class="form-input" id="tempat-provinsi" placeholder="Riau">
+                        </div>
+                        <div class="form-group">
+                            <label>Kabupaten/Kota</label>
+                            <input type="text" class="form-input" id="tempat-kabupaten" placeholder="Pekanbaru">
+                        </div>
+                        <div class="form-group">
+                            <label>Kecamatan</label>
+                            <input type="text" class="form-input" id="tempat-kecamatan" placeholder="Tampan">
+                        </div>
+                        <div class="form-group" style="grid-column: 1 / -1;">
+                            <label>Alamat Lengkap</label>
+                            <textarea class="form-input" id="tempat-alamat" placeholder="Jl. HR Soebrantas No.123"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <h2>Google Maps Embed</h2>
+                    <div class="form-group">
+                        <label>Link Google Maps (Embed URL)</label>
+                        <input type="url" class="form-input" id="maps-link" placeholder="https://www.google.com/maps/embed?pb=...">
+                    </div>
+                    <div class="form-group">
+                        <label>Preview Mapa</label>
+                        <div style="background: rgba(255,255,255,0.7); border-radius: 15px; padding: 15px; min-height: 200px;">
+                            <iframe id="maps-preview" width="100%" height="200" style="border:0; border-radius: 10px;" allowfullscreen="" loading="lazy"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn btn-primary" onclick="saveWaktuTempat()">
+                        <i class="fa-solid fa-save"></i> Simpan Perubahan
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /* ============================================
+           CEK SESSION LOGIN - JIKA BELUM LOGIN, REDIRECT KE LOGIN
+           ============================================ */
+        
+        if (localStorage.getItem('admin_logged_in') !== 'true') {
+            window.location.href = 'login.html';
+        }
+
+        /* ============================================
+           FUNGSI LOGOUT
+           ============================================ */
+        
+        function logout() {
+            if (confirm('Apakah Anda yakin ingin keluar?')) {
+                localStorage.removeItem('admin_logged_in');
+                localStorage.removeItem('admin_user');
+                localStorage.removeItem('login_time');
+                window.location.href = 'login.html';
+            }
+        }
+
+        /* ============================================
+           DATA STORE (Simulasi Database)
+           Struktur data ini Sinkron dengan Frontend
+           ============================================ */
+        
+        // Data Mempelai - Sinkron dengan elemen di index.html
+        let dataMempelai = {
+            pria: {
+                nama: 'Aryo',
+                namaLengkap: 'Aryo Abi',
+                ayah: 'Bpk. Anwar',
+                ibu: 'Ibu Siti'
+            },
+            wanita: {
+                nama: 'Aura',
+                namaLengkap: 'Fithri Aura',
+                ayah: 'Bpk. Budi',
+                ibu: 'Ibu Wati'
+            },
+            foto: {
+                circle: 'hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png',
+                couple: 'hiasan/Biru Emas dan Merah Muda Halus Undangan Pernikahan (320 x 667 piksel) (35).png'
+            }
+        };
+
+        // Data Story - Sinkron dengan halaman Our Story di index.html
+        let dataStories = [
+            { id: 1, tanggal: '2024-10-02', judul: 'Awal Berkenalan', deskripsi: 'Momen pertama kita bertemu', gambar: 'gambar/story1.jpeg' },
+            { id: 2, tanggal: '2025-01-02', judul: 'Mulai Dekat', deskripsi: 'Kita mulai sering berkomunikasi', gambar: 'gambar/story2.jpeg' },
+            { id: 3, tanggal: '2025-01-10', judul: 'Pertemuan Pertama', deskripsi: 'Pertemuan resmi yang pertama', gambar: 'gambar/galeri3.jpeg' }
+        ];
+
+        // Data Tamu - Sinkron dengan parameter ?to= di URL
+        let dataTamu = [
+            { id: 1, nama: 'Alexander', kategori: 'teman', wa: '081234567890', status: 'hadir' },
+            { id: 2, nama: 'Budi Santoso', kategori: 'keluarga', wa: '087654321099', status: 'belum' },
+            { id: 3, nama: 'Citra Dewi', kategori: 'rekan', wa: '085678901234', status: 'tidak_hadir' }
+        ];
+
+        // Data Galeri - Sinkron dengan gallery-grid dan gallery-slider di index.html
+        let dataGaleri = {
+            grid: [
+                'gambar/galeri1.jpeg',
+                'gambar/galeri2.jpeg',
+                'gambar/galeri3.jpeg'
+            ],
+            carousel: [
+                'gambar/galeri3 copy.jpeg',
+                'gambar/galeri4.jpeg'
+            ]
+        };
+
+        // Data Waktu & Tempat - Sinkron dengan info-card di index.html
+        let dataWaktu = {
+            akad: { tanggal: '2027-03-10', jam: '07:00' },
+            resepsi: { tanggal: '2027-03-10', jam: '10:00' },
+            lokasi: {
+                nama: 'Gedung Serbaguna',
+                provinsi: 'Riau',
+                kabupaten: 'Pekanbaru',
+                kecamatan: 'Tampan',
+                alamat: 'Jl. HR Soebrantas No.123, Universitas Riau',
+                mapsEmbed: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3989.6782914978703!2d101.3768487!3d0.4800329999999989!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a853dac0e9dd%3A0x342428dc6336f4e9!2sFakultas%20Teknik%20(FT)%20-%20Unri!5e0!3m2!1sid!2sid!4v1774632634173!5m2!1sid!2sid'
+            }
+        };
+
+        /* ============================================
+           NAVIGATION
+           ============================================ */
+        
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                this.classList.add('active');
+
+                const sectionId = this.dataset.section;
+                document.querySelectorAll('.section-page').forEach(s => s.classList.remove('active'));
+                document.getElementById(sectionId).classList.add('active');
+            });
+        });
+
+        /* ============================================
+           DATA MEMPELAI - SAVE TO FRONTEND
+           ============================================ */
+        
+        function saveMempelai() {
+            dataMempelai.pria.nama = document.getElementById('pria-nama').value;
+            dataMempelai.pria.namaLengkap = document.getElementById('pria-panggilan').value;
+            dataMempelai.pria.ayah = document.getElementById('pria-ayah').value;
+            dataMempelai.pria.ibu = document.getElementById('pria-ibu').value;
+            
+            dataMempelai.wanita.nama = document.getElementById('wanita-nama').value;
+            dataMempelai.wanita.namaLengkap = document.getElementById('wanita-panggilan').value;
+            dataMempelai.wanita.ayah = document.getElementById('wanita-ayah').value;
+            dataMempelai.wanita.ibu = document.getElementById('wanita-ibu').value;
+
+            console.log('=== DATA MEMPELAI DISIMPAN ===');
+            console.log('Pria:', dataMempelai.pria);
+            console.log('Wanita:', dataMempelai.wanita);
+            
+            // Simpan ke localStorage (nantinya bisa ke DB)
+            localStorage.setItem('undangan_mempelai', JSON.stringify(dataMempelai));
+            
+            alert('Data momenai berhasil disimpan! \n\nCatatan: Untuk melihat perubahan di frontend, perlu di-generate ulang file index.html dengan data ini.');
+        }
+
+        function previewUndangan() {
+            window.open('index.html', '_blank');
+        }
+
+        /* ============================================
+           STORY MANAGEMENT
+           ============================================ */
+        
+        function renderStories() {
+            const container = document.getElementById('storyList');
+            container.innerHTML = dataStories.map((story, index) => `
+                <div class="story-item-card">
+                    <img src="${story.gambar}" alt="${story.judul}" class="story-img-preview" onerror="this.src='https://via.placeholder.com/120x90?text=Image'">
+                    <div class="story-fields">
+                        <strong>${story.judul}</strong>
+                        <span style="color: #666; font-size: 13px;">${story.tanggal}</span>
+                        <p style="font-size: 13px; color: #555;">${story.deskripsi}</p>
+                    </div>
+                    <div class="story-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="editStory(${story.id})">
+                            <i class="fa-solid fa-edit"></i>
+                        </button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStory(${story.id})">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addStory() {
+            const tanggal = document.getElementById('story-tanggal').value;
+            const judul = document.getElementById('story-judul').value;
+            const deskripsi = document.getElementById('story-deskripsi').value;
+            
+            if (!tanggal || !judul) {
+                alert('Mohon lengkapi tanggal dan judul kisah!');
+                return;
+            }
+
+            const newStory = {
+                id: Date.now(),
+                tanggal,
+                judul,
+                deskripsi,
+                gambar: 'gambar/story-new.jpeg'
+            };
+
+            dataStories.push(newStory);
+            dataStories.sort((a, b) => new Date(a.tanggal) - new Date(b.tanggal));
+            
+            renderStories();
+            renderStoriesDropdown();
+            
+            console.log('=== STORY BARAN DITAMBAHKAN ===');
+            console.log(newStory);
+            
+            alert('Kisah cinta baru berhasil ditambahkan!');
+            
+            // Reset form
+            document.getElementById('story-tanggal').value = '';
+            document.getElementById('story-judul').value = '';
+            document.getElementById('story-deskripsi').value = '';
+        }
+
+        function editStory(id) {
+            alert('Fitur edit story dalam pengembangan.\nSilakan hapus dan buat ulang story.');
+        }
+
+        function deleteStory(id) {
+            if (confirm('Apakah kamu yakin ingin menghapus kisah ini?')) {
+                dataStories = dataStories.filter(s => s.id !== id);
+                renderStories();
+                renderStoriesDropdown();
+                console.log('=== STORY DIHAPUS ===', id);
+            }
+        }
+
+        /* ============================================
+           DAFTAR TAMU & LINK GENERATOR
+           ============================================ */
+        
+        function renderTamuTable() {
+            const tbody = document.getElementById('tamuTableBody');
+            tbody.innerHTML = dataTamu.map((tamu, index) => {
+                let statusBadge = '';
+                if (tamu.status === 'hadir') statusBadge = '<span style="background: #48bb78; color: #fff; padding: 4px 10px; border-radius: 15px; font-size: 11px;">Hadir</span>';
+                else if (tamu.status === 'tidak_hadir') statusBadge = '<span style="background: #f56565; color: #fff; padding: 4px 10px; border-radius: 15px; font-size: 11px;">Tidak Hadir</span>';
+                else statusBadge = '<span style="background: #a0aec0; color: #fff; padding: 4px 10px; border-radius: 15px; font-size: 11px;">Belum</span>';
+
+                return `
+                    <tr>
+                        <td>${index + 1}</td>
+                        <td><strong>${tamu.nama}</strong></td>
+                        <td style="text-transform: capitalize;">${tamu.kategori}</td>
+                        <td>${tamu.wa}</td>
+                        <td>${statusBadge}</td>
+                        <td>
+                            <div class="table-actions">
+                                <button class="btn-edit" onclick="editTamu(${tamu.id})">Edit</button>
+                                <button class="btn-delete" onclick="deleteTamu(${tamu.id})">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function renderStoriesDropdown() {
+            const select = document.getElementById('select-tamu-link');
+            select.innerHTML = '<option value="">-- Pilih Tamu --</option>' + 
+                dataTamu.map(t => `<option value="${t.id}">${t.nama}</option>`).join('');
+        }
+
+        function addTamu() {
+            const nama = document.getElementById('tamu-nama').value;
+            const kategori = document.getElementById('tamu-kategori').value;
+            const wa = document.getElementById('tamu-wa').value;
+            const status = document.getElementById('tamu-konfirmasi').value;
+
+            if (!nama) {
+                alert('Nama tamu tidak boleh kosong!');
+                return;
+            }
+
+            const newTamu = {
+                id: Date.now(),
+                nama,
+                kategori,
+                wa,
+                status
+            };
+
+            dataTamu.push(newTamu);
+            renderTamuTable();
+            renderStoriesDropdown();
+            
+            console.log('=== TAMU BARAN DITAMBAHKAN ===');
+            console.log(newTamu);
+            
+            alert(`Tamu "${nama}" berhasil ditambahkan!`);
+            
+            // Reset form
+            document.getElementById('tamu-nama').value = '';
+            document.getElementById('tamu-wa').value = '';
+        }
+
+        function editTamu(id) {
+            alert('Fitur edit tamu dalam pengembangan.');
+        }
+
+        function deleteTamu(id) {
+            if (confirm('Apakah kamu yakin ingin menghapus tamu ini?')) {
+                dataTamu = dataTamu.filter(t => t.id !== id);
+                renderTamuTable();
+                renderStoriesDropdown();
+                console.log('=== TAMU DIHAPUS ===', id);
+            }
+        }
+
+        function generateLink() {
+            const select = document.getElementById('select-tamu-link');
+            const output = document.getElementById('generatedLink');
+            
+            if (!select.value) {
+                output.style.display = 'none';
+                return;
+            }
+
+            const tamu = dataTamu.find(t => t.id == select.value);
+            const baseUrl = window.location.origin + window.location.pathname.replace('admin-dashboard.html', 'index.html');
+            const link = `${baseUrl}?to=${encodeURIComponent(tamu.nama)}`;
+            
+            document.getElementById('linkOutput').value = link;
+            output.style.display = 'flex';
+            
+            console.log('=== LINK DIBUAT ===', link);
+        }
+
+        function copyLink() {
+            const input = document.getElementById('linkOutput');
+            input.select();
+            document.execCommand('copy');
+            alert('Link berhasil disalin ke clipboard!');
+        }
+
+        /* ============================================
+           GALERI MANAGEMENT
+           ============================================ */
+        
+        function renderGallery(type) {
+            const container = type === 'grid' ? document.getElementById('galleryGrid') : document.getElementById('galleryCarousel');
+            const images = type === 'grid' ? dataGaleri.grid : dataGaleri.carousel;
+            
+            let html = images.map((img, index) => `
+                <div class="gallery-item">
+                    <img src="${img}" alt="Gallery ${index + 1}" onerror="this.src='https://via.placeholder.com/150?text=Image'">
+                    <button class="remove-btn" onclick="removeGalleryImage('${type}', ${index})">
+                        <i class="fa-solid fa-times"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            html += `
+                <div class="add-gallery-btn" onclick="addGalleryImage('${type}')">
+                    <i class="fa-solid fa-plus"></i>
+                    <span>Tambah</span>
+                </div>
+            `;
+
+            container.innerHTML = html;
+        }
+
+        function addGalleryImage(type) {
+            const url = prompt('Masukkan URL gambar (misal: gambar/galeri5.jpeg)');
+            if (url) {
+                if (type === 'grid') dataGaleri.grid.push(url);
+                else dataGaleri.carousel.push(url);
+                
+                renderGallery('grid');
+                renderGallery('carousel');
+                console.log('=== GAMBAR DITAMBAHKAN ===', type, url);
+            }
+        }
+
+        function removeGalleryImage(type, index) {
+            if (confirm('Hapus gambar ini?')) {
+                if (type === 'grid') dataGaleri.grid.splice(index, 1);
+                else dataGaleri.carousel.splice(index, 1);
+                
+                renderGallery('grid');
+                renderGallery('carousel');
+                console.log('=== GAMBAR DIHAPUS ===', type, index);
+            }
+        }
+
+        function saveGaleri() {
+            localStorage.setItem('undangan_galeri', JSON.stringify(dataGaleri));
+            
+            console.log('=== DATA GALER DISIMPAN ===');
+            console.log('Grid:', dataGaleri.grid);
+            console.log('Carousel:', dataGaleri.carousel);
+            
+            alert('Data galeri berhasil disimpan!');
+        }
+
+        /* ============================================
+           WAKTU & TEMPAT
+           ============================================ */
+        
+        function saveWaktuTempat() {
+            dataWaktu.akad.tanggal = document.getElementById('event-tanggal').value;
+            dataWaktu.akad.jam = document.getElementById('event-jam').value;
+            dataWaktu.resepsi.tanggal = document.getElementById('resepsi-tanggal').value;
+            dataWaktu.resepsi.jam = document.getElementById('resepsi-jam').value;
+            
+            dataWaktu.lokasi.nama = document.getElementById('tempat-nama').value;
+            dataWaktu.lokasi.provinsi = document.getElementById('tempat-provinsi').value;
+            dataWaktu.lokasi.kabupaten = document.getElementById('tempat-kabupaten').value;
+            dataWaktu.lokasi.kecamatan = document.getElementById('tempat-kecamatan').value;
+            dataWaktu.lokasi.alamat = document.getElementById('tempat-alamat').value;
+            dataWaktu.lokasi.mapsEmbed = document.getElementById('maps-link').value;
+
+            localStorage.setItem('undangan_waktu', JSON.stringify(dataWaktu));
+            
+            // Update preview
+            document.getElementById('maps-preview').src = dataWaktu.lokasi.mapsEmbed;
+            
+            console.log('=== DATA WAKTU & TEMPAT DISIMPAN ===');
+            console.log(dataWaktu);
+            
+            alert('Data waktu & tempat berhasil disimpan!');
+        }
+
+        function updateMapsPreview() {
+            const link = document.getElementById('maps-link').value;
+            document.getElementById('maps-preview').src = link;
+        }
+
+        document.getElementById('maps-link').addEventListener('input', updateMapsPreview);
+
+        /* ============================================
+           INITIALIZATION
+           ============================================ */
+        
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('=== DASHBOARD ADMIN DIINITIALIZE ===');
+            console.log('Mode: Development (Data disimpan sementara di localStorage)');
+            
+            // Load data from localStorage if exists
+            if (localStorage.getItem('undangan_mempelai')) {
+                dataMempelai = JSON.parse(localStorage.getItem('undangan_mempelai'));
+            }
+            if (localStorage.getItem('undangan_galeri')) {
+                dataGaleri = JSON.parse(localStorage.getItem('undangan_galeri'));
+            }
+            if (localStorage.getItem('undangan_waktu')) {
+                dataWaktu = JSON.parse(localStorage.getItem('undangan_waktu'));
+            }
+
+            // Isi form dataempelai
+            document.getElementById('pria-nama').value = dataMempelai.pria.nama;
+            document.getElementById('pria-panggilan').value = dataMempelai.pria.namaLengkap;
+            document.getElementById('pria-ayah').value = dataMempelai.pria.ayah;
+            document.getElementById('pria-ibu').value = dataMempelai.pria.ibu;
+            
+            document.getElementById('wanita-nama').value = dataMempelai.wanita.nama;
+            document.getElementById('wanita-panggilan').value = dataMempelai.wanita.namaLengkap;
+            document.getElementById('wanita-ayah').value = dataMempelai.wanita.ayah;
+            document.getElementById('wanita-ibu').value = dataMempelai.wanita.ibu;
+
+            // Isi form waktu & tempat
+            document.getElementById('event-tanggal').value = dataWaktu.akad.tanggal;
+            document.getElementById('event-jam').value = dataWaktu.akad.jam;
+            document.getElementById('resepsi-tanggal').value = dataWaktu.resepsi.tanggal;
+            document.getElementById('resepsi-jam').value = dataWaktu.resepsi.jam;
+            
+            document.getElementById('tempat-nama').value = dataWaktu.lokasi.nama;
+            document.getElementById('tempat-provinsi').value = dataWaktu.lokasi.provinsi;
+            document.getElementById('tempat-kabupaten').value = dataWaktu.lokasi.kabupaten;
+            document.getElementById('tempat-kecamatan').value = dataWaktu.lokasi.kecamatan;
+            document.getElementById('tempat-alamat').value = dataWaktu.lokasi.alamat;
+            document.getElementById('maps-link').value = dataWaktu.lokasi.mapsEmbed;
+            document.getElementById('maps-preview').src = dataWaktu.lokasi.mapsEmbed;
+
+            // Render all lists/tables
+            renderStories();
+            renderTamuTable();
+            renderStoriesDropdown();
+            renderGallery('grid');
+            renderGallery('carousel');
+        });
+    </script>
+</body>
+
+</html>

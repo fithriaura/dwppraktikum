@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dashboard Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('background admin.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(3px);
+        }
+
+        .login-card {
+            position: relative;
+            width: 100%;
+            max-width: 380px;
+            padding: 40px 30px;
+            border-radius: 25px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .user-icon {
+            width: 50px;
+            height: 50px;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+        }
+
+        .login-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            width: 100%;
+            margin-bottom: 18px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.85);
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            color: #333;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: #888;
+        }
+
+        .form-group input:focus {
+            box-shadow: 0 0 0 3px rgba(66, 135, 245, 0.3);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #4287f5 0%, #2b6cb0 100%);
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #357abd 0%, #1e4d7a 100%);
+            transform: scale(1.02);
+        }
+
+        .login-btn:active {
+            transform: scale(0.98);
+        }
+
+        @media (max-width: 400px) {
+            .login-card {
+                margin: 0 15px;
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-card">
+        <svg class="user-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <h1 class="login-title">Dashboard Admin</h1>
+
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Username" autocomplete="username">
+            </div>
+            <div class="form-group">
+                <input type="password" id="password" placeholder="Password" autocomplete="current-password">
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+
+    <script>
+        // CEK JIKA SUDAH LOGIN - redirect ke dashboard
+        if (localStorage.getItem('admin_logged_in') === 'true') {
+            window.location.href = 'admin-dashboard.html';
+        }
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+
+            if (!username || !password) {
+                alert('Mohon maaf, Username dan Password tidak boleh kosong!');
+                return;
+            }
+
+            // SIMPAN SESSION LOGIN
+            localStorage.setItem('admin_logged_in', 'true');
+            localStorage.setItem('admin_user', username);
+            localStorage.setItem('login_time', new Date().toLocaleString());
+
+            console.log('Login berhasil!');
+            console.log('Username:', username);
+            console.log('Waktu login:', localStorage.getItem('login_time'));
+
+            // REDIRECT KE DASHBOARD
+            window.location.href = 'admin-dashboard.html';
+        });
+    </script>
+</body>
+
+</html>
